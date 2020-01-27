@@ -1,3 +1,17 @@
 <html>
-    <h1>Testing</h1>
+    <input class='num1' type="number">
+    <input class='num2' type="number">
+    <button class="but">What's the sum?</button>
+    <br>
+    <input class='out' type="text">
 </html>
+<script>
+const num1 = document.querySelector('.num1')
+const num2 = document.querySelector('.num2')
+const out = document.querySelector('.out')
+const but = document.querySelector('.but')
+
+but.onclick = () => {
+    out.value = +num1.value + +num2.value
+}
+</script>
