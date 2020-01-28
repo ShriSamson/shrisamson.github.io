@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Prime Machine</title>
+    </head>
+    <p>Enter a number and the next prime will be returned.</p>
+    <input class='num1' type="number">
+    <button class="but">Next Prime</button>
+</html>
+<script>
+const num1 = document.querySelector('.num1')
+const out = document.querySelector('.out')
+const but = document.querySelector('.but')
+
+const isPrime = (num, div=2) => {
+    if (num === 2 | num === 3) {
+        return true
+    }        
+    if (num % div === 0 || num <= 1) {
+        return false
+    }
+    if (div > Math.sqrt(num)) {
+        return true
+    }
+    return isPrime(num, div + 1)
+}
+
+const primeMachine = (number) => {
+    const nextPrime = (num) => {
+        return isPrime(num) ? num : nextPrime(num + 1)
+    }
+        
+    if (number < 2) {
+        number = 1
+    }
+    if (isPrime(number)) {
+        number++
+    }
+    return nextPrime(number)
+}
+
+but.onclick = () => {
+    num1.value = primeMachine(+num1.value)
+}
+</script>
