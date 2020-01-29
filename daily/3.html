@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hide and Show</title>
+</head>
+<body>
+    <button class='show'>Show</button>
+    <button class='hide'>Hide</button>
+    <br>
+    <br>
+    <div class='appear'>
+    </div>
+    
+</body>
+</html>
+<script>
+const hide = document.querySelector('.hide')
+const show = document.querySelector('.show')
+const app = document.querySelector('.appear')
+show.onclick = () => {
+    app.innerHTML = `
+        <p>Boo!</p>        
+    `
+}
+hide.onclick = () => {
+    app.innerHTML = ``
+}
+</script>
