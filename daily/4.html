@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Transposure</title>
+</head>
+<body>
+    <h1>Transposing with a Closure</h1>
+    <input class="str" type="text">
+    <button class='gen'>Generate New</button>
+    <button class='clear'>Clear</button>
+    <br>
+    <button class='trans'>Transpose</button>
+    <button class='replace'>Replace</button>
+    <div class='cont'></div>    
+</body>
+</html>
+<script>
+const startingText = document.querySelector('.str')
+const genButton = document.querySelector('.gen')
+const clearButton = document.querySelector('.clear')
+const transButton = document.querySelector('.trans')
+const replaceButton = document.querySelector('.replace')
+const contElement = document.querySelector('.cont')
+
+const reverse = (str, i=0, result='') => {
+    if (i === str.length) {
+        return result
+    }
+
+    return reverse(str, i + 1, str[i] + result) 
+}
+
+const startApp = () => {
+    const transpose = (str, i=0, result='') => {
+        if (str.length === i) {
+            return result
+        }
+
+        return transpose(str, i + 1, result + `<h2>${str[i]}</h2> `)
+    }
+
+    const spinner = (i=0) => {
+        const direction = ['right','down','left','up']
+        let out = ''
+        return (string, shift=0) => {
+            i += shift
+            switch (direction[i]) { 
+                case 'right':
+                    out = `<h2>${string}</h2>`
+                    break;
+                case 'down':
+                    out = transpose(string)
+                    break;
+                case 'left':
+                    out = `<h2>${reverse(string)}</h2>`
+                    break;
+                case 'up':
+                    out = transpose(reverse(string))
+                    break;
+            }
+            i = (i !== 3) ? i + 1 : 0
+            return out
+        }
+    }
+
+    genButton.onclick = () => {
+
+        const spin = spinner()
+        const first = startingText.value
+        contElement.innerHTML = spin(first)
+
+        transButton.onclick = () => {
+            contElement.innerHTML = spin(first)
+        }
+        
+        replaceButton.onclick = () => {
+            const replacementText = startingText.value
+            contElement.innerHTML = spin(replacementText, -1)
+            
+            transButton.onclick = () => {
+                contElement.innerHTML = spin(replacementText)
+            }    
+        }
+    }
+
+    clearButton.onclick = () => {
+        contElement.innerHTML= ``
+    }
+}
+
+
+startApp()
+</script>
