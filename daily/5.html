@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vertizontal Primes</title>
+</head>
+<body>
+    <input class='text' type="number">
+    <button class='horz'>Horizontal</button>
+    <button class='vert'>Vertical</button>
+    <h1 class='hDisplay'></h1>
+    <div class='vDisplay'></div>
+</body>
+</html>
+
+<script>
+
+const textElement = document.querySelector('.text')
+const horizontalButtonElement = document.querySelector('.horz')
+const verticalButtonElement = document.querySelector('.vert')
+const horizontalDisplayElement = document.querySelector('.hDisplay')
+const verticalDisplayElement = document.querySelector('.vDisplay')
+
+const isPrime = (num, div=2) => {
+    // return true or false if num is prime
+    if (num === 2 || num === 3) {
+        return true
+    }
+
+    if (num % div === 0 || num < 2) {
+        return false 
+    }
+
+    if (div > Math.sqrt(num)) {
+        return true 
+    }
+
+    return isPrime(num, div + 1)
+}
+
+const primeGen = (last, wrap=['',''], start=2, result='') => {
+    if (start > last) {
+        return result
+    }
+
+    if (isPrime(start)) {
+        result +=  (wrap[0] + `${start}... ` + wrap[1])
+    }
+
+    return primeGen(last, wrap, start + 1, result)
+}
+
+horizontalButtonElement.onclick = () => {
+
+    verticalDisplayElement.innerHTML = ''
+    horizontalDisplayElement.innerText = primeGen(+textElement.value)
+}
+
+verticalButtonElement.onclick = () => {
+
+    horizontalDisplayElement.innerText = ''
+    verticalDisplayElement.innerHTML = primeGen(+textElement.value, ['<h1>', '</h1>'])
+}
+</script>
