@@ -1,0 +1,72 @@
+<!-- Submit a low and a high number and have the sum of all integers between them return.-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Delayed Arithmetic Sum</title>
+    </head>
+    <body>
+        <p>Submit two numbers to return the sum of all of integers between them.</p>
+        <p>Low:</p>
+        <input class='low' type="number">
+        <p>High:</p>
+        <input class='high' type="number">
+        <button class='but'>Submit</button>
+        <h1 class='display'></h1>
+    </body>
+</html>
+
+<script>
+const lowNumElement = document.querySelector('.low')
+const highNumElement = document.querySelector('.high')
+const buttonElement = document.querySelector('.but')
+const displayElement = document.querySelector('.display')
+
+const valid = (low, high) => {
+    return low < high 
+}
+
+buttonElement.onclick = () => {
+
+    /* 
+    constants for low and high value
+
+    valid check that numbers are valid else return 'high value must be higher than low'
+    */
+    const lowVal = +lowNumElement.value
+    const highVal = +highNumElement.value
+
+    const gap = (highVal - lowVal) <= 10 ? 200 : (2000/ (highVal - lowVal))
+    if (lowVal < highVal) {
+        displayElement.innerText = ''
+        solution(lowVal, highVal, lowVal, gap)
+    } else {
+        displayElement.innerText = 'High must be higher than low!'
+    }   
+}
+
+const solution = (low=0, high=0, low0, delay, result='') => {
+    if (low >= high) {
+        setTimeout(() => {
+            result = `${result}${low} = `
+            displayElement.innerText = result 
+
+            setTimeout(() => {
+
+                result = `${result}${((high - low0) + 1) * (low0 + high) / 2}`
+                displayElement.innerText = result 
+                
+            }, delay)
+        }, delay)
+        return
+    }
+
+    setTimeout(() => {
+        result = `${result}${low} + `
+        displayElement.innerText = result
+        return solution(low + 1, high, low0, delay, result)
+    }, delay)
+}
+</script>
